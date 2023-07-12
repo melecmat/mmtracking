@@ -3,8 +3,8 @@ _base_ = [
     '../../_base_/datasets/mot_challenge.py', '../../_base_/default_runtime.py'
 ]
 
-img_scale = (800, 1440) # TODO change
-samples_per_gpu = 4
+img_scale = (100, 200) # TODO change
+samples_per_gpu = 1
 
 model = dict(
     type='OCSORT',
@@ -84,18 +84,18 @@ test_pipeline = [
 ]
 data = dict(
     samples_per_gpu=samples_per_gpu,
-    workers_per_gpu=4,
+    workers_per_gpu=1,
     persistent_workers=True,
     train=dict(
         _delete_=True,
-        type='CocoVideoDataset',
+        type='MultiImageMixDataset',
         dataset=dict(
-            type='CocoVideoDataset',
+            type='CocoDataset',
             ann_file=[
-                'data/munich_drones/coco_annotations.json'
+                '/mnt/datasets/idp/2022-10-06T16-34-42/coco_annotations.json'
             ],
             img_prefix=[
-                'data/munich_drones/images'
+                '/mnt/datasets/idp/2022-10-06T16-34-42/images'
             ],
             classes=('car', ),
             pipeline=[
